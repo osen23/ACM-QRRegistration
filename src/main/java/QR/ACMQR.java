@@ -91,22 +91,17 @@ public class ACMQR extends JFrame implements Runnable, ThreadFactory {
 
                 LuminanceSource source = new BufferedImageLuminanceSource(image);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-
-                try {
-                    result = new MultiFormatReader().decode(bitmap);
-                } catch (NotFoundException e) { //no qr code found
-                }
                 
                 if (result != null) {
                     DB db = new DB();
                     try {
-                        db.register(result.getText(), "Dummy"); 
+                        db.register(result.getText(), " "); 
                         checkAttendance(result.getText());
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Error: \""+result.getText()+"\" not in database.");
                         ex.printStackTrace();
                     }
-                    //JOptionPane.showMessageDialog(null, result.getText());
+              
                 }
             }
         } while (true);
@@ -116,7 +111,7 @@ public class ACMQR extends JFrame implements Runnable, ThreadFactory {
         try {
 			label.setText("Name: "+DB.getName(uid));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     }
